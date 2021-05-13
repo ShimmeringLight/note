@@ -26,4 +26,37 @@ Dependence Injection （DI）依赖注入是IoC的最常见形式。容器全权
 
 Spring中有两种IoC容器
 
-- BeanFactory:
+- `BeanFactory`: Spring 实例化、配置和管理对象的最基本接口
+- `ApplicationContext`：BeanFactory的子接口。支持更丰富的功能
+
+`ApplicationContext`实现：
+
+- **ClassPathXmlApplicationContext**：从classpath获取配置文件
+
+``` java
+BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath.xml");
+```
+
+- **FileSystemXmlApplicationContext**:从文件系统获取配置文件
+
+```java
+BeanFactory beanFactory = new FileSystemXmlApplicationContext("fileSystemConfig.xml");
+```
+
+### IoC容器的工作步骤
+
+- 配置元数据：需要配置一些元数据来告诉 Spring，你希望容器如何工作，具体来说，就是如何去初始化、配置、管理 JavaBean 对象。
+- 实例化容器：由 IoC 容器解析配置的元数据。IoC 容器的 Bean Reader 读取并解析配置文件，根据定义生成 BeanDefinition 配置元数据对象，IoC 容器根据 BeanDefinition 进行实例化、配置及组装 Bean。
+- 使用容器：由客户端实例化容器，获取需要的 Bean。
+
+#### 配置元数据
+
+- **基于xml配置**：Spring 的传统配置方式。在 `<beans>` 标签中配置元数据内容。
+
+  缺点是当 JavaBean 过多时，产生的配置文件较杂乱。
+
+- **基于注解配置**：Spring2.5 引入。可以大大简化配置。
+
+- **基于 Java 配置**：可以使用 Java 类来定义 JavaBean 。
+
+  为了使用这个新特性，需要用到 `@Configuration` 、`@Bean` 、`@Import` 和 `@DependsOn` 注解。
