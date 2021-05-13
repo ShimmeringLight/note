@@ -60,3 +60,37 @@ BeanFactory beanFactory = new FileSystemXmlApplicationContext("fileSystemConfig.
 - **基于 Java 配置**：可以使用 Java 类来定义 JavaBean 。
 
   为了使用这个新特性，需要用到 `@Configuration` 、`@Bean` 、`@Import` 和 `@DependsOn` 注解。
+
+### Bean概述
+
+​	一个 Spring 容器管理一个或多个 bean。 这些 bean 根据你配置的元数据（比如 xml 形式）来创建。 Spring IoC 容器本身，并不能识别你配置的元数据。为此，要将这些配置信息转为 Spring 能识别的格式——BeanDefinition 对象。
+
+#### 命名Bean
+
+​	指定 id 和 name 属性不是必须的。 Spring 中，并非一定要指定 id 和 name 属性。实际上，Spring 会自动为其分配一个特殊名。 如果你需要引用声明的 bean，这时你才需要一个标识。官方推荐驼峰命名法来命名。
+
+#### 别名
+
+```xml
+<alias name="subsystemA-dataSource" alias="subsystemB-dataSource"/>
+<alias name="subsystemA-dataSource" alias="myApp-dataSource" />
+```
+
+#### 实例化Bean
+
+**构造器方式**
+
+``` xml
+<bean id="exampleBean" class="examples.ExampleBean"/>
+```
+
+**静态工厂方法**
+
+- 需要在bean的class属性中指定拥有该工厂方法的类
+
+```xml
+<bean id="car" class="com.itdoc.spring.factory.StaticFactory" factory-method="getCar">
+        <constructor-arg value="Maserati"/>
+    </bean>
+```
+
